@@ -2,13 +2,17 @@ import react, { useState } from "react";
 import "./index.css";
 
 const Form = () => {
-  const [formState, setFormState] = useState({
+  const initialState = {
     firstName: "",
     lastName: "",
     biography: "",
     transport: "",
     agree: false,
-  });
+    breakfast: false,
+    dinner: false,
+  };
+
+  const [formState, setFormState] = useState(initialState);
 
   const onChangeHandler = (e) => {
     const value =
@@ -21,6 +25,7 @@ const Form = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    console.log(formState);
   };
 
   return (
@@ -50,6 +55,37 @@ const Form = () => {
         onChange={onChangeHandler}
         value={formState.biography}
       ></textarea>
+
+      <fieldset>
+        <legend>Select your meals</legend>
+        <input
+          type="checkbox"
+          name="breakfast"
+          id="breakfast"
+          onChange={onSubmitHandler}
+          checked={formState.breakfast}
+        />
+        <label htmlFor="breakfast">Breackfast</label>
+
+        <input
+          type="checkbox"
+          name="launch"
+          id="launch"
+          onChange={onSubmitHandler}
+          checked={formState.launch}
+        />
+        <label htmlFor="launch">Launch</label>
+
+        <input
+          type="checkbox"
+          name="dinner"
+          id="dinner"
+          onChange={onSubmitHandler}
+          checked={formState.dinner}
+        />
+        <label htmlFor="dinner">Dinner</label>
+      </fieldset>
+
       <label htmlFor="agree">I agree to the TOC</label>
       <input
         type="checkbox"
