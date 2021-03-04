@@ -1,9 +1,7 @@
-import Form from './Form'
+import Container from "./Container";
 
 function App() {
-  return (
-    <Form />
-  );
+  return <Container />;
 }
 
 export default App;
