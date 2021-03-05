@@ -6,6 +6,7 @@ import Form from "./Form";
 
 const Container = () => {
   const [records, setRecords] = useState([]);
+  const [liveText, setLiveText] = useState("");
 
   const onSubmitHandler = (entry) => {
     setRecords(
@@ -32,6 +33,9 @@ const Container = () => {
         <Section headingText="Records">
           <List records={records} />
         </Section>
+      </div>
+      <div aria-live="polite" aria-atomic="true">
+        {liveText}
       </div>
     </Fragment>
   );
