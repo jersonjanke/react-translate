@@ -24,15 +24,15 @@ const Container = () => {
 
   useEffect(() => {
     axios.get("/api/records").then(({ data }) => {
-      console.log(sortRecords(data));
       setRecords(data);
     });
   }, []);
 
   const onSubmitHandler = (entry) => {
-    setRecords(sortRecords([...records, entry]));
-
-    setLiveText(`${entry.recordName} successfully `);
+    axios.post("/api/records", entry).then(({ data }) => {
+      setRecords(sortRecords([...records, data]));
+      setLiveText(`${entry.recordName} successfully `);
+    });
   };
 
   return (
