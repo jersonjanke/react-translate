@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import Header from "./Header";
 import Section from "./Section";
 import List from "./List";
@@ -21,18 +21,25 @@ const sortRecords = (records) => {
 const Container = () => {
   const [records, setRecords] = useState([]);
   const [liveText, setLiveText] = useState("");
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    axios.get("/api/records").then(({ data }) => {
-      setRecords(data);
-    });
+    const fetchData = async () => {
+      const { data } = await axios.get("/api/records");
+      setRecords(sortRecords(data));
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
-  const onSubmitHandler = (entry) => {
-    axios.post("/api/records", entry).then(({ data }) => {
-      setRecords(sortRecords([...records, data]));
-      setLiveText(`${entry.recordName} successfully `);
-    });
+  const onSubmitHandler = async (entry) => {
+    const { data } = await axios.post("/api/records", entry);
+    setRecords(sortRecords([...records, data]));
+    setLiveText(`${entry.recordName} successfully `);
   };
 
   return (
